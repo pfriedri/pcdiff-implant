@@ -1,0 +1,41 @@
+# Data related directories and files
+/datasets
+*.nrrd
+*.ply
+*.npy
+*.npz
+*.obj
+
+# Model output
+/pcdiff/output
+/voxelization/out
+
+# Log-files
+*.log
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+.idea/
