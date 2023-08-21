@@ -10,8 +10,9 @@ from src import config
 from src.model import Encode2Points
 from src.data.core import SkullEval
 from src.utils import load_config, load_model_manual, readCT, crop, padding, reverse_padding, reverse_crop, \
-    re_sample_shape
+    re_sample_shape, filter_voxels_within_radius
 from tqdm import tqdm
+from scipy import ndimage
 
 np.set_printoptions(precision=4)
 
@@ -93,6 +94,7 @@ def main():
                 psr_grid = psr_grid[0, :, :, :]
                 out = np.zeros((512, 512, 512))
                 out[psr_grid <= 0] = 1
+                out = ndimage.binary_dilation(out)
 
                 completes += out  # Add to implant ensemble
 
@@ -132,6 +134,7 @@ def main():
             psr_grid = psr_grid[0, :, :, :]
             out = np.zeros((512, 512, 512))
             out[psr_grid <= 0] = 1
+            out = ndimage.binary_dilation(out)
 
             completes += out  # Add to implant ensemble
 
@@ -140,14 +143,15 @@ def main():
         mean_complete[completes >= np.ceil(cfg['generation']['num_ensemble']/2)] = 1
 
         mean_implant = mean_complete - defective_skull
+        mean_implant = filter_voxels_within_radius(inputs[0, 30720-3072:, :], mean_implant)
         mean_implant = mean_implant.astype(bool)
         mean_implant = dip.Opening(mean_implant, dip.SE((3, 3, 3)))
-        mean_implant = dip.Opening(mean_implant, dip.SE((3, 3, 3)))
+        #mean_implant = dip.Opening(mean_implant, dip.SE((3, 3, 3)))
         mean_implant = dip.Label(mean_implant, mode="largest")
         mean_implant = dip.MedianFilter(mean_implant, dip.Kernel(shape='rectangular', param=(3, 3, 3)))
         mean_implant.Convert('BIN')
         mean_implant = dip.Closing(mean_implant, dip.SE((3, 3, 3)))
-        mean_implant = dip.Closing(mean_implant, dip.SE((3, 3, 3)))
+        #mean_implant = dip.Closing(mean_implant, dip.SE((3, 3, 3)))
         mean_implant = dip.FillHoles(mean_implant)
 
         if cfg['data']['dset'] == 'SkullBreak':

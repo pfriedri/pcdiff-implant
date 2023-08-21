@@ -36,7 +36,7 @@ def re_sample(image, current_spacing, new_spacing):
     actual_resize_factor = new_shape / image.shape
     new_spacing = current_spacing / actual_resize_factor
 
-    image_resized = ndimage.interpolation.zoom(image, actual_resize_factor)
+    image_resized = ndimage.zoom(image, actual_resize_factor)
 
     return image_resized, new_spacing
 

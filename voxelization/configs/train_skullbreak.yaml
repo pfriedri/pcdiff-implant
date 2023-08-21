@@ -40,14 +40,14 @@ train:
   out_dir: out/skullbreak
   w_psr: 1
   model_selection_metric: psr_l2
-  print_every: 100
-  checkpoint_every: 2000
-  validate_every: 1000
-  backup_every: 1000
-  total_epochs: 600000
-  visualize_every: 1000
-  exp_pcl: True
-  exp_mesh: True
+  print_every: 10
+  checkpoint_every: 5 # in epochs
+  validate_every: 10 # in epochs
+  backup_every: 100 # in epochs
+  total_epochs: 2600
+  visualize_every: 5000
+  exp_pcl: False # Set true to save some results during training (default: False - to save memory)
+  exp_mesh: False # Set true to save some results during training (default: False - to save memory)
   n_workers: 16
   n_workers_val: 0
 generation:

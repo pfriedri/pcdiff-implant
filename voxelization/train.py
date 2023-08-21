@@ -155,39 +155,38 @@ def main():
                         break
                 logger.info('Saved mesh and pointcloud')
 
-            # Run validation
-            if it > 0 and (it % cfg['train']['validate_every']) == 0:
-                eval_dict = trainer.evaluate(val_loader, model)
-                metric_val = eval_dict[model_selection_metric]
-                logger.info('Validation metric (%s): %.4f'
-                    % (model_selection_metric, metric_val))
+        # Run validation
+        if epoch > 0 and (epoch % cfg['train']['validate_every']) == 0:
+            eval_dict = trainer.evaluate(val_loader, model)
+            metric_val = eval_dict[model_selection_metric]
+            logger.info('Validation metric (%s): %.4f' % (model_selection_metric, metric_val))
 
-                for k, v in eval_dict.items():
-                    writer.add_scalar('val/%s' % k, v, it)
+            for k, v in eval_dict.items():
+                writer.add_scalar('val/%s' % k, v, it)
 
-                if -(metric_val - metric_val_best) >= 0:
-                    metric_val_best = metric_val
-                    logger.info('New best model (loss %.4f)' % metric_val_best)
-                    state = {'epoch': epoch, 'it': it, 'loss_val_best': metric_val_best}
-                    state['state_dict'] = model.state_dict()
-                    torch.save(state, os.path.join(cfg['train']['out_dir'], 'model_best.pt'))
-
-            # Save checkpoint
-            if (epoch > 0) & (it % cfg['train']['checkpoint_every'] == 0):
-                state = {'epoch': epoch,
-                         'it': it,
-                         'loss_val_best': metric_val_best}
-                pcl = None
+            if -(metric_val - metric_val_best) >= 0:
+                metric_val_best = metric_val
+                logger.info('New best model (loss %.4f), epoch %d' % (metric_val_best, epoch))
+                state = {'epoch': epoch, 'it': it, 'loss_val_best': metric_val_best}
                 state['state_dict'] = model.state_dict()
+                torch.save(state, os.path.join(cfg['train']['out_dir'], 'model_best.pt'))
+
+        # Save checkpoint
+        if (epoch > 0) & (epoch % cfg['train']['checkpoint_every'] == 0):
+            state = {'epoch': epoch,
+                     'it': it,
+                     'loss_val_best': metric_val_best}
+            pcl = None
+            state['state_dict'] = model.state_dict()
                 
-                torch.save(state, os.path.join(cfg['train']['out_dir'], 'model.pt'))
+            torch.save(state, os.path.join(cfg['train']['out_dir'], 'model.pt'))
 
-                if (it % cfg['train']['backup_every'] == 0):
-                    torch.save(state, os.path.join(cfg['train']['dir_model'], '%04d' % it + '.pt'))
-                    logger.info("Backup model at iteration %d" % it)
-                logger.info("Save new model at iteration %d" % it)
+            if (it % cfg['train']['backup_every'] == 0):
+                torch.save(state, os.path.join(cfg['train']['dir_model'], '%d' % epoch + '.pt'))
+                logger.info("Backup model at epoch %d" % epoch)
+            logger.info("Save new model at epoch %d" % epoch)
 
-            done = time.time()
+        done = time.time()
 
 
 if __name__ == '__main__':

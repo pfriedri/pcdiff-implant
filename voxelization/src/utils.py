@@ -231,6 +231,33 @@ def re_sample_shape(image, current_spacing, new_shape):
     return image_resized, new_spacing
 
 
+# Function to make method more robust to possible outliers and weakly trained voxelization networks
+def filter_voxels_within_radius(pc, vox):
+    # Calculate the center of the point cloud
+    pc = pc.numpy()
+    pc *= 512  # rescale to fit the volume size
+    center = np.mean(pc, axis=0)
+
+    # Calculate max distance of points to center
+    dist_to_center = np.linalg.norm(pc - center, axis=1)
+    max_dist_to_center = max(dist_to_center)
+
+    # Calculate distances from each voxel to the center
+    voxel_centers = np.argwhere(vox)
+    distances = np.linalg.norm(voxel_centers - center, axis=1)
+    radius = max_dist_to_center * 1.1
+
+    # Keep the voxels within the specified radius
+    filtered_vox = voxel_centers[distances <= radius]
+
+    # Create a new voxel representation with only the filtered voxels
+    new_vox = np.zeros_like(vox)
+    for voxel in filtered_vox:
+        new_vox[tuple(voxel)] = 1
+
+    return new_vox
+
+
 def readCT(filename):
     ct_data, ct_header = nrrd.read(filename)
 

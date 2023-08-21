@@ -801,9 +801,9 @@ def parse_args():
 
     ''' Evaluation '''
     parser.add_argument('--saveIter', type=int, default=1000, help='unit: epoch')
-    parser.add_argument('--diagIter', type=int, default=1000, help='unit: epoch')
-    parser.add_argument('--vizIter', type=int, default=1000, help='unit: epoch')
-    parser.add_argument('--print_freq', type=int, default=2, help='unit: iter')
+    parser.add_argument('--diagIter', type=int, default=2000, help='unit: epoch')
+    parser.add_argument('--vizIter', type=int, default=2000, help='unit: epoch')
+    parser.add_argument('--print_freq', type=int, default=10, help='unit: iter')
 
     # Manual seed for deterministic sampling, etc.
     parser.add_argument('--manualSeed', default=1234, type=int, help='random seed')
