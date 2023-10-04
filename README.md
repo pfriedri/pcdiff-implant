@@ -96,13 +96,16 @@ The code for computing the evaluation scores is based on:
 * https://github.com/OldaKodym/evaluation_metrics
 
 ## Citation
-If you use this code, please cite
+If you find our work useful, please consider to star this repository and cite our paper:
 ```bibtex
-@misc{friedrich2023pcdiff-implant,
-      title={Point Cloud Diffusion Models for Automatic Implant Generation}, 
-      author={Paul Friedrich and Julia Wolleb and Florentin Bieder and Florian M. Thieringer and Philippe C. Cattin},
-      year={2023},
-      eprint={2303.08061},
-      archivePrefix={arXiv},
-      primaryClass={eess.IV}}
+@InProceedings{10.1007/978-3-031-43996-4_11,
+                author="Friedrich, Paul and Wolleb, Julia and Bieder, Florentin and Thieringer, Florian M. and Cattin, Philippe C.",
+                editor="Greenspan, Hayit and Madabhushi, Anant and Mousavi, Parvin and Salcudean, Septimiu and Duncan, James and Syeda-Mahmood, Tanveer and Taylor, Russell",
+                title="Point Cloud Diffusion Models for Automatic Implant Generation",
+                booktitle="Medical Image Computing and Computer Assisted Intervention -- MICCAI 2023",
+                year="2023",
+                publisher="Springer Nature Switzerland",
+                address="Cham",
+                pages="112--122",
+               }
 ```
