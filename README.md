@@ -5,6 +5,18 @@
 
 This is the official PyTorch implementation of the MICCAI 2023 paper [Point Cloud Diffusion Models for Automatic Implant Generation](https://pfriedri.github.io/pcdiff-implant-io/) by Paul Friedrich, Julia Wolleb, Florentin Bieder, Florian M. Thieringer and Philippe C. Cattin.
 
+If you find our work useful, please consider to :star: **star this repository** and :memo: **cite our paper**:
+```bibtex
+@InProceedings{10.1007/978-3-031-43996-4_11,
+                author="Friedrich, Paul and Wolleb, Julia and Bieder, Florentin and Thieringer, Florian M. and Cattin, Philippe C.",
+                title="Point Cloud Diffusion Models for Automatic Implant Generation",
+                booktitle="Medical Image Computing and Computer Assisted Intervention -- MICCAI 2023",
+                year="2023",
+                pages="112--122",
+               }
+```
+
+
 ## Paper Abstract
 Advances in 3D printing of biocompatible materials make patient-specific implants increasingly popular. The design of these implants is, however, still a tedious and largely manual process. Existing approaches to automate implant generation are mainly based on 3D U-Net architectures on downsampled or patch-wise data, which can result in a loss of detail or contextual information. Following the recent success of Diffusion Probabilistic Models, we propose a novel approach for implant generation based on a combination of 3D point cloud diffusion models and voxelization networks. Due to the stochastic sampling process in our diffusion model, we can propose an ensemble of different implants per defect from which the physicians can choose the most suitable one. We evaluate our method on the SkullBreak and SkullFix dataset, generating high-quality implants and achieving competitive evaluation scores.
 
@@ -94,18 +106,3 @@ Our code is based on/ inspired by the following repositories:
 
 The code for computing the evaluation scores is based on:
 * https://github.com/OldaKodym/evaluation_metrics
-
-## Citation
-If you find our work useful, please consider to star this repository and cite our paper:
-```bibtex
-@InProceedings{10.1007/978-3-031-43996-4_11,
-                author="Friedrich, Paul and Wolleb, Julia and Bieder, Florentin and Thieringer, Florian M. and Cattin, Philippe C.",
-                editor="Greenspan, Hayit and Madabhushi, Anant and Mousavi, Parvin and Salcudean, Septimiu and Duncan, James and Syeda-Mahmood, Tanveer and Taylor, Russell",
-                title="Point Cloud Diffusion Models for Automatic Implant Generation",
-                booktitle="Medical Image Computing and Computer Assisted Intervention -- MICCAI 2023",
-                year="2023",
-                publisher="Springer Nature Switzerland",
-                address="Cham",
-                pages="112--122",
-               }
-```
